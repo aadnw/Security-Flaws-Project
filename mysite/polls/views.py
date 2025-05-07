@@ -11,6 +11,9 @@ class IndexView(generic.ListView):
     context_object_name = "latest_question_list"
 
     def get_queryset(self):
+        # filter() method returns only the rows that match the search,
+        # this way Django's ORM protects itself from SQL injection
+
         # pylint: disable=no-member
         return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
 
@@ -19,6 +22,9 @@ class DetailView(generic.DetailView):
     template_name = "polls/detail.html"
 
     def get_queryset(self):
+        # filter() method returns only the rows that match the search,
+        # this way Django's ORM protects itself from SQL injection
+
         # pylint: disable=no-member
         return Question.objects.filter(pub_date__lte=timezone.now())
 
@@ -27,12 +33,16 @@ class ResultsView(generic.DetailView):
     template_name = "polls/results.html"
 
     def get_queryset(self):
+        # filter() method returns only the rows that match the search,
+        # this way Django's ORM protects itself from SQL injection
+
         # pylint: disable=no-member
         return Question.objects.filter(pub_date__lte=timezone.now())
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
+        # Django's ORM sanitizes the primary key, no unvalidated user input injected to SQL queries
         selected_choice = question.choice_set.get(pk=request.POST["choice"])
     # pylint: disable=no-member
     except (KeyError, Choice.DoesNotExist):
@@ -44,3 +54,5 @@ def vote(request, question_id):
         selected_choice.save()
 
     return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
+
+
