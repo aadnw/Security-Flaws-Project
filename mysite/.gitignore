@@ -1,2 +1,12 @@
-__pycache__
 __pycache__/
+*.py[cod]
+*.so
+
+db.sqlite3
+
+*.log
+
+*/mysite/__pycache__/
+*/polls/__pycache__/
+*/polls/migrations/__pycache__/
+*.pyc
