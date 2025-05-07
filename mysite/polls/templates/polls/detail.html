@@ -8,7 +8,8 @@
   </head>
   <body>
     <form action="{% url 'polls:vote' question.id %}" method="post">
-    <!--All forms that include POST-requests should include a csrf token -->
+    <!--The flaw is that if the csrf token was missing. 
+    All forms that include POST-requests should include a csrf token. -->
     {% csrf_token %}
     <fieldset>
         <legend><h1>{{ question.question_text }}</h1></legend>
