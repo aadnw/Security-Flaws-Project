@@ -23,9 +23,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-=)r!#h(3+^^#=)wp3u-_)xlam4yq3(+8+n@3ars=vx97vx2cui'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+# As mentioned in the warning above, debug should be set to False
+# Allowed hosts is set to localhost, which is the only intended domain for this project
+# Now other domains that could cause security risks aren't allowed
+DEBUG = False
+
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
