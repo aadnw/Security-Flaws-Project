@@ -24,9 +24,19 @@ SECRET_KEY = 'django-insecure-=)r!#h(3+^^#=)wp3u-_)xlam4yq3(+8+n@3ars=vx97vx2cui
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
+# The flaw is that if debug was set to True and no allowed hosts were set.
 # As mentioned in the warning above, debug should be set to False
 # Allowed hosts is set to localhost, which is the only intended domain for this project
 # Now other domains that could cause security risks aren't allowed
+
+"""Version with Security Misconfiguration vulnerablity:
+
+DEBUG = True
+ALLOWED_HOSTS = []
+
+Fixed version under this comment.
+"""
+
 DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1']
@@ -129,7 +139,9 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Set session cookie age to 30 minutes (30*60sec=1800),
+# Flaw is that if no session cookie age or session_expire_at_browser_close were set.
+# This Identification and Authentication failure vulnerability is fixed below.
+# Session cookie age is set to 30 minutes (30*60sec=1800),
 # now if the admin forgets to logout from a public computer e.g.,
 # a malicious user can't access the admin page.
 # Also the session automatically expires if the browser is closed
