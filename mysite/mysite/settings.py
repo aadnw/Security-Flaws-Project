@@ -24,8 +24,8 @@ SECRET_KEY = 'django-insecure-=)r!#h(3+^^#=)wp3u-_)xlam4yq3(+8+n@3ars=vx97vx2cui
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-# The flaw is that if debug was set to True and no allowed hosts were set.
-# As mentioned in the warning above, debug should be set to False
+# The flaw is that if debug is set to True and no allowed hosts are set.
+# As mentioned in the warning above, debug should be set to False in production.
 # Allowed hosts is set to localhost, which is the only intended domain for this project
 # Now other domains that could cause security risks aren't allowed
 
@@ -34,10 +34,10 @@ SECRET_KEY = 'django-insecure-=)r!#h(3+^^#=)wp3u-_)xlam4yq3(+8+n@3ars=vx97vx2cui
 DEBUG = True
 ALLOWED_HOSTS = []
 
-Fixed version under this comment.
 """
 
-DEBUG = False
+DEBUG = True #This should be set to False when in production,
+             #but this project stays under development only.
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
