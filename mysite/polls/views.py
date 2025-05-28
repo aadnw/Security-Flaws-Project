@@ -16,6 +16,10 @@ from .models import Question, Choice
 
 # Code with flaws is commented inside the functions. Fixed code is the not commented, actual code.
 
+# SQL Injection is a vulnerability that could occur in all of the functions in this file.
+# It is demonstrated only in the following function called "demonstrate_sql_injection".¨
+# This function demonstrates how raw SQL queries shoudl not be used in any of this file's functions.
+
 def demonstrate_sql_injection(request):
     user_input = request.GET.get("filter")
     
@@ -34,16 +38,7 @@ class IndexView(generic.ListView):
     context_object_name = "latest_question_list"
 
     def get_queryset(self):
-        """Version with SQL Injection vulnerability:
-        
-        user_input = self.request.GET.get("filter", "1=1")
-        query = f"SELECT * FROM polls_question WHERE {user_input} ORDER BY pub_date DESC LIMIT 5"
-
-        return Question.objects.raw(query)
-        
-        -----------
-
-        Version with Broken Access Control vulnerability:
+        """Version with Broken Access Control vulnerability:
         
         return Question.objects.all().order_by("-pub_date")[:5]
         """
@@ -56,16 +51,7 @@ class DetailView(generic.DetailView):
     template_name = "polls/detail.html"
 
     def get_queryset(self):
-        """Version with SQL Injection vulnerability:
-        
-        user_input = self.request.GET.get("filter", "1=1")
-        query = f"SELECT * FROM polls_question WHERE {user_input}" 
-
-        return Question.objects.raw(query)
-
-        ------------
-        
-        Version with Broken Access Control vulnerability:
+        """Version with Broken Access Control vulnerability:
         
         return Question.objects.all()
         """
@@ -78,16 +64,7 @@ class ResultsView(generic.DetailView):
     template_name = "polls/results.html"
 
     def get_queryset(self):
-        """Version with SQL Injection vulnerability:
-        
-        user_input = self.request.GET.get("filter", "1=1")
-        query = f"SELECT * FROM polls_question WHERE {user_input}" 
-
-        return Question.objects.raw(query)
-
-        ------------
-        
-        Version with Broken Access Control vulnerability:
+        """Version with Broken Access Control vulnerability:
         
         return Question.objects.all()
         """
@@ -96,20 +73,6 @@ class ResultsView(generic.DetailView):
         return Question.objects.filter(pub_date__lte=timezone.now())
 
 def vote(request, question_id):
-    """Version with SQL Injection vulnerability:
-
-    question = get_object_or_404(Question, pk=question_id)
-    try:
-        choice_id = request.POST["choice"]
-        query = f"SELECT * FROM polls_choice WHERE id = {choice_id}"
-        selected_choice = Choice.objects.raw(query)
-    except:
-    .
-    .
-    .
-    
-    """
-
     question = get_object_or_404(Question, pk=question_id)
     try:
         # Django's ORM sanitizes the primary key, no unvalidated user input injected to SQL queries
