@@ -5,8 +5,5 @@ db.sqlite3
 */mysite/__pycache__/
 */polls/__pycache__/
 */polls/migrations/__pycache__/
-
-# Flaw is that if files containing sensitive information were not in .gitignore file.
-# Under this comment is one such sensitive file .git added to this .gitignore file.
 .git
 
