@@ -16,6 +16,19 @@ from .models import Question, Choice
 
 # Code with flaws is commented inside the functions. Fixed code is the not commented, actual code.
 
+def demonstrate_sql_injection(request):
+    user_input = request.GET.get("filter")
+    
+    if user_input:
+        query = f"SELECT * FROM polls_question WHERE {user_input} ORDER BY pub_date DESC LIMIT 5"
+    else:
+        now = timezone.now().isoformat()
+        query = f"SELECT * FROM polls_question WHERE pub_date <= '{now}' ORDER BY pub_date DESC LIMIT 5"
+
+    # pylint: disable=no-member
+    results = Question.objects.raw(query)
+    return render(request, "polls/vulnerable_page.html", {"latest_question_list": results, "user_input": user_input or ""})
+
 class IndexView(generic.ListView):
     template_name = "polls/index.html"
     context_object_name = "latest_question_list"
