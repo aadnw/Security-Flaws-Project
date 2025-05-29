@@ -17,8 +17,8 @@ from .models import Question, Choice
 # Code with flaws is commented inside the functions. Fixed code is the not commented, actual code.
 
 # SQL Injection is a vulnerability that could occur in all of the functions in this file.
-# It is demonstrated only in the following function called "demonstrate_sql_injection".¨
-# This function demonstrates how raw SQL queries shoudl not be used in any of this file's functions.
+# It is demonstrated only in the following function called "demonstrate_sql_injection".
+# This function demonstrates how raw SQL queries should not be used in any of this file's functions.
 
 def demonstrate_sql_injection(request):
     user_input = request.GET.get("filter")
